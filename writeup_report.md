@@ -76,7 +76,7 @@ Ultimately I searched on just one scale using YCrCb 3-channel HOG features plus 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](https://github.com/anyong298/CarND-Vehicle-Detection/blob/master/project_video_results.mp4)
+Here's a [link to my video result](https://drive.google.com/file/d/0B8qitkbIZglGMnZWSktFQUVsX0U/view?usp=sharing)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -100,4 +100,4 @@ Here are  example results showing the heatmap for the five frames that containin
 
 The current implementation works on the test video. By observation on the video results, the current pipeline MIGHT fail when (1) a vehicle goes partially into the image, (2) the vechiles is outside of the window searching the region (the higher part of the images), (3) the road is white and the vechile is white too. The first one is mainly due to the reason that the classifier trained for featurs extracted for a whole car instead of a partial car, which can be improved if the training images containing vehicles partially in images. The second one can be improved by extending the searching region, which will lead to more computational cost. The last one only happens for few images, which can be eliminated by using a tracking strategy, that using the vehicle's previous detection results infers the current posistion if it is not found in the image.
 
-However, the current method has a very high computational cost, about 4.5 seconds per frame, even thought only the lower part of the images are utlized for searching windows. In order to improve the efficiency, future work will explore how to utilize less features and probably utilzie linear SVM which is fast than SVM with an RGF kernel. 
+However, the current method has a very high computational cost, about 4.5 seconds per frame, even thought only the lower part of the images are utlized for searching windows. In order to improve the efficiency, future work will explore how to utilize less features and probably utilzie linear SVM which is fast than SVM with an RBF kernel. 
