@@ -16,7 +16,7 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/sliding_windows.png
 [image4]: ./output_images/sliding_window_result.png
 [image5]: ./output_images/bboxes_and_heat.png
-[image6]: ./output_images/test_results.png
+[image6]: ./output_images/test_images_with_cars.png
 
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -89,11 +89,15 @@ Here are  example results showing the heatmap for the five frames that containin
 
 ![alt text][image5]
 
+### Here are five test frames and their final vehicles detection results:
 
+![alt text][image6]
 ---
 
 ###Discussion
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The current implementation works on the test video. By observation on the video results, the current pipeline MIGHT fail when (1) a vehicle goes partially into the image, (2) the vechiles is outside of the window searching the region (the higher part of the images), (3) the road is white and the vechile is white too. The first one is mainly due to the reason that the classifier trained for featurs extracted for a whole car instead of a partial car, which can be improved if the training images containing vehicles partially in images. The second one can be improved by extending the searching region, which will lead to more computational cost. The last one only happens for few images, which can be eliminated by using a tracking strategy, that using the vehicle's previous detection results infers the current posistion if it is not found in the image.
+
+However, the current method has a very high computational cost, about 4.5 seconds per frame, even thought only the lower part of the images are utlized for searching windows. In order to improve the efficiency, future work will explore how to utilize less features and probably utilzie linear SVM which is fast than SVM with an RGF kernel. 
