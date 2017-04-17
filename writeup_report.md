@@ -16,9 +16,8 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/sliding_windows.png
 [image4]: ./output_images/sliding_window_result.png
 [image5]: ./output_images/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[image6]: ./output_images/test_results.png
+
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -57,19 +56,19 @@ In addition, the spatial features and color histograms are also extracted for ea
 
 After scaling the data and splitting it into test and train datasets in the 3rd code cell, the GridSerarchCV is utilized to find the best parameters for SVM.  The code for finding the best parameters is in the 4th code cell.
 
-The best parameters set are  {'gamma': 0.0001, 'kernel': 'rbf', 'C': 10} in terms of both precision and recall accuracy. Using these parameters, the SVM classifier is trained in the 4th code cell.
+The best parameters set are  {'gamma': 0.0001, 'kernel': 'rbf', 'C': 10} in terms of both precision and recall accuracy. Using these parameters, the SVM classifier is trained in the 5th code cell.
 
 ###Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+The sliding window search method is defined in the 6th in the function find_cars. The windows are only searched in the lower part of the image and a 8x8 cells are created. The searched windows are listed in the following image.
 
 ![alt text][image3]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on just one scale using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some results of the test images:
 
 ![alt text][image4]
 ---
@@ -77,25 +76,18 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://github.com/anyong298/CarND-Vehicle-Detection/blob/master/project_video_results.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+Here are  example results showing the heatmap for the five frames that containing vehicles and the finala results with the bounding boxes overlaid on the five images:
 
-### Here are six frames and their corresponding heatmaps:
+### Here are five test frames and their corresponding heatmaps:
 
 ![alt text][image5]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
 
 
 ---
